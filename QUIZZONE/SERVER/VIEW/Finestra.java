@@ -1,32 +1,21 @@
 package VIEW;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JScrollPane;
+import javax.swing.JList;
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
 
 public class Finestra extends JFrame {
 
 	private JPanel contentPane;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Finestra frame = new Finestra();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
+	private JScrollPane scrollPane;
+	private JList list;
+	private DefaultListModel defaultListModel;
+	private JButton btnDomanda;
+	
 	/**
 	 * Create the frame.
 	 */
@@ -35,8 +24,28 @@ public class Finestra extends JFrame {
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(31, 33, 365, 155);
+		contentPane.add(scrollPane);
+		
+		list = new JList();
+		defaultListModel = new DefaultListModel();
+		list.setModel(defaultListModel);
+		scrollPane.setViewportView(list);
+		
+		btnDomanda = new JButton("Domanda");
+		btnDomanda.setBounds(164, 213, 89, 23);
+		contentPane.add(btnDomanda);
 	}
 
+	public DefaultListModel getDefaultListModel() {
+		return defaultListModel;
+	}
+
+	public JButton getBtnDomanda() {
+		return btnDomanda;
+	}
 }

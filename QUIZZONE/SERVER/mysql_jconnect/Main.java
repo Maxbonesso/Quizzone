@@ -45,12 +45,12 @@ public class Main {
 			* Dopo aver contato il n.ro di righe devo riportare il cursore
 			* in cima attraverso rs.beforeFirs() in modo da poter poi stampare
 			* tutti gli elementi della tabella
-* NB: Se non c’era la necessità di dover contare il n.ro di righe,
+			* NB: Se non c’era la necessità di dover contare il n.ro di righe,
 			* potevo benissimo evitare rs.last(), rs.getRow(), rs.beforeFirst()
 			*/
 			rs.last();
 			
-// stampa intestazione della tabella e n.ro di righe
+			// stampa intestazione della tabella e n.ro di righe
 			System.out.print(
 				rs.getRow() + " righe coinvolte!\nN\tCapitale\t|\tPaese\n"	
 			);
@@ -74,13 +74,13 @@ public class Main {
 				"\n* SQLState: " + ex.getSQLState() +
 				"\n* VendorError: " + ex.getErrorCode() +
 				"\n"
-);
+			);
 		}
 		finally {
-/*
-* porzione di codice facoltativa
-* viene eseguita a prescindere dalla presenza di un errore
-*/
+		/*
+		* porzione di codice facoltativa
+		* viene eseguita a prescindere dalla presenza di un errore
+		*/
 			System.out.println("\nEnding of Program, Enjoy your self!! :)\n");
 		}
 	}
