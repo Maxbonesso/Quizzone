@@ -23,6 +23,12 @@ public class TConnessione extends Thread {
 	private Gestione g;
 	private ArrayList<Integer> indici;
 	private Random rand = new Random();
+	private Domanda d;
+	private String str1;
+	private String str2;
+	private ArrayList<Integer> vittorie;
+	private InputStreamReader isr;
+	private PrintWriter out;
 	
 	public TConnessione(Socket socket, Socket s1, DefaultListModel dlm, Gestione g)
 	{
@@ -32,17 +38,13 @@ public class TConnessione extends Thread {
 		flag = 0;
 		this.dlm = dlm;
 		indici = new ArrayList<Integer>();
+		vittorie = new ArrayList<Integer>();
+		vittorie.add(0);
+		vittorie.add(0);
 	}
 	
 	@Override
 	public void run(){
-		
-		String ret = new String();
-		Double d = Math.random()*100;
-		numero = d.intValue();
-		InputStreamReader isr;
-		PrintWriter out;
-		dlm.addElement("Nuovo client connesso al server!!!");	
 		
 		//scrive ai client che inizia il gioco
 		try {
@@ -78,17 +80,17 @@ public class TConnessione extends Thread {
 				out = new PrintWriter(s1.getOutputStream(), true);
 				out.println(invio);
 				
-				//riceve la rispsota dal primo client
+				//riceve la risposta dal primo client
 				isr = new InputStreamReader(s.getInputStream());
 				BufferedReader in = new BufferedReader(isr);
-				//haiVinto(in.readLine());
+				str1 = in.readLine();
 				
 				//riceve la risposta dal secodno client
 				isr = new InputStreamReader(s1.getInputStream());
 				in = new BufferedReader(isr);
-				//haiVinto(in.readLine());
+				str2 = in.readLine();
 				
-				ret = "Ciao";
+				haiVinto();
 				
 				flag++;
 			} catch (IOException e) {
@@ -98,8 +100,118 @@ public class TConnessione extends Thread {
 		}
 	}
 	
-	private void controlloNumero(int n)
+	private void haiVinto()
 	{
+		String str1 = "$2$8$";
 		
+		if(haIndovinato(str1) && haIndovinato(str2))
+		{
+			if(tempo(str1) < tempo(str2))
+			{
+				comVittoria(0);
+				comSconfitta(1);
+			}
+			else if(tempo(str1) > tempo(str2))
+			{
+				comVittoria(1);
+				comSconfitta(1);
+			}
+			else
+			{
+				comVittoria(0);
+				comVittoria(1);
+			}
+		}
+		else if (haIndovinato(str1))
+		{
+			comVittoria(0);
+			comSconfitta(1);
+		}
+		else if (haIndovinato(str2))
+		{
+			comVittoria(1);
+			comSconfitta(0);
+		}
+		else
+		{
+			comSconfitta(0);
+			comSconfitta(1);
+		}
+		
+	}
+	
+	private boolean haIndovinato(String s)
+	{
+		boolean ret = false;
+		
+		int n = str1.indexOf("$", 1);
+		if(Integer.parseInt(str1.substring(1, n)) == d.getRispG())
+			ret = true;
+		
+		return ret;
+	}
+	
+	private int tempo(String z)
+	{
+		int n = str1.indexOf("$", 1);
+		int n1 = str1.indexOf("$", n+1);
+		String stringa1 = str1.substring(n+1, n1);
+		
+		return Integer.parseInt(stringa1);
+	}
+	
+	private boolean comVittoria(int n)
+	{
+		boolean ret = false;
+
+			try {
+				
+				if(n == 0)
+				{
+					out = new PrintWriter(s.getOutputStream(), true);
+					out.println("Congraturazioni hai vinto!!!");
+					ret = true;
+				}
+				else if (n == 1)
+				{
+					out = new PrintWriter(s1.getOutputStream(), true);
+					out.println("Congraturazioni hai vinto!!!");
+					ret = true;
+				}
+				
+				vittorie.set(n, vittorie.get(n)+1);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		return ret;
+	}
+	
+	private boolean comSconfitta(int n)
+	{
+		boolean ret = false;
+
+		try {
+			
+			if(n == 0)
+			{
+				out = new PrintWriter(s.getOutputStream(), true);
+				out.println("Risposta errata");
+				ret = true;
+			}
+			else if (n == 1)
+			{
+				out = new PrintWriter(s1.getOutputStream(), true);
+				out.println("Risposta errata");
+				ret = true;
+			}
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	return ret;
 	}
 }

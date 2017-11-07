@@ -34,11 +34,14 @@ public class Controllo implements ActionListener{
 			int i;
 			do
 			{
-				i = rand.nextInt(20);
+				i = rand.nextInt(19) + 1;
 			}while(indici.contains(i));
+			
 			indici.add(i);
 			Domanda d = g.getDomanda(i);
 			f.getDefaultListModel().addElement(d.toString()); 
+			f.getDefaultListModel().addElement(d.codificaCasuale() + "  " + Integer.toString(d.getRispG()));
+			
 		}
 	}
 	

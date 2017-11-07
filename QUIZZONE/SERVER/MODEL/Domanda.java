@@ -99,10 +99,12 @@ public class Domanda {
 			do
 			{
 				n = rand.nextInt(3) + 1;
-			} while(ind.contains(n));
+			} while(ind.contains(n) && flag == n);
 			
-			if(n == 1)
+			if(flag == rispG)
 				this.rispG = n;
+			else if(n == rispG)
+				this.rispG = flag;
 			
 			scambio(flag, n);
 			ind.add(n);
