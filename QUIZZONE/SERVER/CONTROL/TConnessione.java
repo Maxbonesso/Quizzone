@@ -81,12 +81,12 @@ public class TConnessione extends Thread {
 				//riceve la rispsota dal primo client
 				isr = new InputStreamReader(s.getInputStream());
 				BufferedReader in = new BufferedReader(isr);
-				haiVinto(in.readLine());
+				//haiVinto(in.readLine());
 				
 				//riceve la risposta dal secodno client
 				isr = new InputStreamReader(s1.getInputStream());
 				in = new BufferedReader(isr);
-				haiVinto(in.readLine());
+				//haiVinto(in.readLine());
 				
 				ret = "Ciao";
 				
