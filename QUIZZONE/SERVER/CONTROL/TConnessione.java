@@ -98,6 +98,24 @@ public class TConnessione extends Thread {
 				e.printStackTrace();
 			}
 		}
+		
+			try {
+				
+				if(vittorie.get(0) > vittorie.get(1))
+				{
+					out = new PrintWriter(s.getOutputStream(), true);
+					out.println("Hai vinto il gioco, congraturazioni!!");
+				}
+				else if(vittorie.get(0) < vittorie.get(1))
+				{
+					out = new PrintWriter(s1.getOutputStream(), true);
+					out.println("Hai vinto il gioco, congraturazioni!!");
+				}
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	}
 	
 	private void haiVinto()
