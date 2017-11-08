@@ -43,10 +43,15 @@ public class Server extends Thread {
 			try {
 				s = ss.accept();
 				connessioni++;
+				
+				stampaDati();
+				
 				s1 = ss.accept();
 				connessioni++;
-				TConnessione tc = new TConnessione(s, s1, dlm, g);
+				TConnessione tc = new TConnessione(s, s1, g);
 				tc.start();
+				
+				stampaDati();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

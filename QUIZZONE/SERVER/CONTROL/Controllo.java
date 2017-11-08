@@ -22,6 +22,8 @@ public class Controllo implements ActionListener{
 
 		f.setVisible(true);
 		indici = new ArrayList<Integer>();
+		Server s = new Server(f.getDefaultListModel(), 9999, g);
+		s.start();
 		
 		f.getBtnDomanda().addActionListener(this);
 	}

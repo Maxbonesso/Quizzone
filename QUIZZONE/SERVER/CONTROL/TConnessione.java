@@ -17,9 +17,7 @@ public class TConnessione extends Thread {
 	
 	private Socket s;
 	private Socket s1;
-	private int numero;
 	private int flag;
-	private DefaultListModel dlm;
 	private Gestione g;
 	private ArrayList<Integer> indici;
 	private Random rand = new Random();
@@ -30,13 +28,12 @@ public class TConnessione extends Thread {
 	private InputStreamReader isr;
 	private PrintWriter out;
 	
-	public TConnessione(Socket socket, Socket s1, DefaultListModel dlm, Gestione g)
+	public TConnessione(Socket socket, Socket s1, Gestione g)
 	{
 		this.g = g;
 		s = socket;
 		this.s1 = s1;
 		flag = 0;
-		this.dlm = dlm;
 		indici = new ArrayList<Integer>();
 		vittorie = new ArrayList<Integer>();
 		vittorie.add(0);
@@ -49,10 +46,10 @@ public class TConnessione extends Thread {
 		//scrive ai client che inizia il gioco
 		try {
 			out = new PrintWriter(s.getOutputStream(), true);
-			out.println("Iniziamo!");
+			out.println("$Iniziamo!$");
 			
 			out = new PrintWriter(s1.getOutputStream(), true);
-			out.println("Iniziamo!");
+			out.println("$Iniziamo!$");
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -64,15 +61,17 @@ public class TConnessione extends Thread {
 		while(flag<10)
 		{	
 			try {
+				
+				//ricava domanda casuale dal database
 				int n;
 				do
 				{
 					n = rand.nextInt(19) + 1;
 				}while(indici.contains(n));
 				Domanda domanda = g.getDomanda(n);
+				String invio = domanda.codifica();
 				
 				//manda al primo client la domanda
-				String invio = domanda.codifica();
 				out = new PrintWriter(s.getOutputStream(), true);
 				out.println(invio);
 				
@@ -97,6 +96,8 @@ public class TConnessione extends Thread {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
+		//comunicazioni delle vittorie e delle sconfitte ai client
 		}
 		
 			try {
@@ -104,24 +105,31 @@ public class TConnessione extends Thread {
 				if(vittorie.get(0) > vittorie.get(1))
 				{
 					out = new PrintWriter(s.getOutputStream(), true);
-					out.println("Hai vinto il gioco, congraturazioni!!");
+					out.println("$Hai vinto il gioco, congraturazioni!!$");
 				}
 				else if(vittorie.get(0) < vittorie.get(1))
 				{
 					out = new PrintWriter(s1.getOutputStream(), true);
-					out.println("Hai vinto il gioco, congraturazioni!!");
+					out.println("$Hai vinto il gioco, congraturazioni!!$");
 				}
-				
+				else
+				{
+					out = new PrintWriter(s.getOutputStream(), true);
+					out.println("$Pareggio, congraturazioni a entrambi$");
+					
+					out = new PrintWriter(s1.getOutputStream(), true);
+					out.println("$Pareggio, congraturazioni a entrambi$");
+				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-	}
+			
+			
+	} //termina run del thread
 	
 	private void haiVinto()
-	{
-		String str1 = "$2$8$";
-		
+	{	
 		if(haIndovinato(str1) && haIndovinato(str2))
 		{
 			if(tempo(str1) < tempo(str2))
@@ -187,13 +195,13 @@ public class TConnessione extends Thread {
 				if(n == 0)
 				{
 					out = new PrintWriter(s.getOutputStream(), true);
-					out.println("Congraturazioni hai vinto!!!");
+					out.println("$Congraturazioni hai vinto!!!$");
 					ret = true;
 				}
 				else if (n == 1)
 				{
 					out = new PrintWriter(s1.getOutputStream(), true);
-					out.println("Congraturazioni hai vinto!!!");
+					out.println("$Congraturazioni hai vinto!!!$");
 					ret = true;
 				}
 				
@@ -215,13 +223,13 @@ public class TConnessione extends Thread {
 			if(n == 0)
 			{
 				out = new PrintWriter(s.getOutputStream(), true);
-				out.println("Risposta errata");
+				out.println("$Risposta errata$");
 				ret = true;
 			}
 			else if (n == 1)
 			{
 				out = new PrintWriter(s1.getOutputStream(), true);
-				out.println("Risposta errata");
+				out.println("$Risposta errata$");
 				ret = true;
 			}
 			
