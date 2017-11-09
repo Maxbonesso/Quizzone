@@ -6,8 +6,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+
+import javax.swing.JButton;
 
 import VIEW.Frame;
 import VIEW.Indirizzo;
@@ -18,11 +23,19 @@ public class Control implements ActionListener{
 	private Frame f;
 	private Intro i;
 	private Indirizzo ind;
+	private Client c;
 	private String luogo;
 
-	public Control(Indirizzo ind) throws IOException {
+	public Control(Frame f, Intro i, Indirizzo ind) throws IOException {
+		this.f=f;
+		this.i=i;
 		this.ind = ind;
-		
+
+		f.getRisp1().addActionListener(this);
+		f.getRisp2().addActionListener(this);
+		f.getRisp3().addActionListener(this);
+		f.getRisp4().addActionListener(this);
+		i.getBtnPlay().addActionListener(this);
 		ind.getBtnInserisci().addActionListener(this);
 	}
 
@@ -30,42 +43,92 @@ public class Control implements ActionListener{
 	public void actionPerformed(ActionEvent evt) {
 		if(evt.getSource()==ind.getBtnInserisci()){
 			luogo=ind.getIndirizzo().getText();
-			
-			ind.close();
-			i=new Intro();
-			i.getBtnPlay().addActionListener(this);
-			
-			try {
-				ServerSocket ss=new ServerSocket(9999);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}	
+			c=new Client(luogo);
+			ind.setVisible(false);
+			i.setVisible(true);
 		}
-		
-		if(evt.getSource()==i.getBtnPlay()){
+		else if(evt.getSource()==i.getBtnPlay()){
+			i.getBtnPlay().setEnabled(false);
+			
+			c.creaConnessione();
+			
 			try {
-				Socket s=new Socket(luogo, 9999);
-				i.getBtnPlay().setEnabled(false);
-				
+				c.attendi();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
-			f=new Frame();
-			f.getRisp1().addActionListener(this);
-			f.getRisp2().addActionListener(this);
-			f.getRisp3().addActionListener(this);
-			f.getRisp4().addActionListener(this);
+			this.domanda();
+			
+			i.setVisible(false);
+			f.setVisible(true);
 		}
-		
+		else if(evt.getSource()==f.getRisp1()){
+			try {
+				c.invio("$1$5$");
+				this.domanda();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else if(evt.getSource()==f.getRisp2()){
+			try {
+				c.invio("$2$5$");
+				this.domanda();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else if(evt.getSource()==f.getRisp3()){
+			try {
+				c.invio("$3$5$");
+				this.domanda();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else if(evt.getSource()==f.getRisp4()){
+			try {
+				c.invio("$4$5$");
+				this.domanda();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 	
+	public void domanda(){
+		
+		String text="";
+		try {
+			text = c.getText();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		ArrayList<JButton> risposte=new ArrayList<JButton>();
+		risposte.add(f.getRisp1());
+		risposte.add(f.getRisp2());
+		risposte.add(f.getRisp3());
+		risposte.add(f.getRisp4());
+		
+		int n1,n = text.indexOf("$", 1);
+		String stringa = text.substring(1, n);
+		f.getDomanda().setText(stringa);
+		
+		for(int i=0; i<risposte.size();i++){
+			n1 = text.indexOf("$", n+1);
+			stringa = text.substring(n+1, n1);
+			risposte.get(i).setText(stringa);
+			n = n1;
+		}
+	}
 	
-}
-
-
-class Grafica1 extends Thread{
 	
 }

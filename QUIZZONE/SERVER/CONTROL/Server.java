@@ -48,7 +48,7 @@ public class Server extends Thread {
 				
 				s1 = ss.accept();
 				connessioni++;
-				TConnessione tc = new TConnessione(s, s1, g);
+				TConnessione tc = new TConnessione(s, s1, g, dlm);
 				tc.start();
 				
 				stampaDati();

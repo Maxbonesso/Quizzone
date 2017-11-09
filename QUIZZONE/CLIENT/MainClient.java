@@ -8,8 +8,13 @@ import VIEW.Intro;
 public class MainClient {
 
 	public static void main(String[] args) throws IOException {
+		Frame f=new Frame();
+		f.setVisible(false);
+		Intro i=new Intro();
+		i.setVisible(false);
 		Indirizzo ind=new Indirizzo();
-		Control c=new Control(ind);
+		ind.setVisible(true);
+		Control c=new Control(f,i,ind);
 	}
 
 }

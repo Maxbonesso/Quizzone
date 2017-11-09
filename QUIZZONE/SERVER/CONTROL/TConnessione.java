@@ -27,9 +27,12 @@ public class TConnessione extends Thread {
 	private ArrayList<Integer> vittorie;
 	private InputStreamReader isr;
 	private PrintWriter out;
+	private DefaultListModel dlm;
 	
-	public TConnessione(Socket socket, Socket s1, Gestione g)
+	public TConnessione(Socket socket, Socket s1, Gestione g, DefaultListModel dlm)
 	{
+		this.dlm = dlm;
+		this.s = socket;
 		this.g = g;
 		s = socket;
 		this.s1 = s1;
@@ -69,8 +72,10 @@ public class TConnessione extends Thread {
 					n = rand.nextInt(19) + 1;
 				}while(indici.contains(n));
 				Domanda domanda = g.getDomanda(n);
-				String invio = domanda.codifica();
+				d = domanda;
+				String invio = domanda.codificaCasuale();
 				
+				dlm.addElement(invio);
 				//manda al primo client la domanda
 				out = new PrintWriter(s.getOutputStream(), true);
 				out.println(invio);
@@ -83,6 +88,7 @@ public class TConnessione extends Thread {
 				isr = new InputStreamReader(s.getInputStream());
 				BufferedReader in = new BufferedReader(isr);
 				str1 = in.readLine();
+				dlm.addElement(str1);
 				
 				//riceve la risposta dal secodno client
 				isr = new InputStreamReader(s1.getInputStream());
@@ -171,6 +177,8 @@ public class TConnessione extends Thread {
 		boolean ret = false;
 		
 		int n = str1.indexOf("$", 1);
+		
+		dlm.addElement(Integer.parseInt(str1.substring(1, n)));
 		if(Integer.parseInt(str1.substring(1, n)) == d.getRispG())
 			ret = true;
 		
