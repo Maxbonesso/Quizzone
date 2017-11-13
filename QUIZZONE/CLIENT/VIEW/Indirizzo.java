@@ -41,7 +41,7 @@ public class Indirizzo extends JFrame {
 		indirizzo.setColumns(10);
 		
 		btnInserisci = new JButton("INSERISCI");
-		btnInserisci.setBounds(119, 133, 89, 23);
+		btnInserisci.setBounds(111, 133, 119, 23);
 		contentPane.add(btnInserisci);
 	}
 

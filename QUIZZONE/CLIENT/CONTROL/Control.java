@@ -17,19 +17,24 @@ import javax.swing.JButton;
 import VIEW.Frame;
 import VIEW.Indirizzo;
 import VIEW.Intro;
+import VIEW.Vittoria;
 
 public class Control implements ActionListener{
 
 	private Frame f;
 	private Intro i;
 	private Indirizzo ind;
+	private Vittoria v;
 	private Client c;
 	private String luogo;
+	private int cont=0;
+	private Thread conta;
 
-	public Control(Frame f, Intro i, Indirizzo ind) throws IOException {
+	public Control(Frame f, Intro i, Indirizzo ind, Vittoria v) throws IOException {
 		this.f=f;
 		this.i=i;
 		this.ind = ind;
+		this.v = v;
 
 		f.getRisp1().addActionListener(this);
 		f.getRisp2().addActionListener(this);
@@ -37,6 +42,7 @@ public class Control implements ActionListener{
 		f.getRisp4().addActionListener(this);
 		i.getBtnPlay().addActionListener(this);
 		ind.getBtnInserisci().addActionListener(this);
+		v.getBtnRicomincia().addActionListener(this);
 	}
 
 	@Override
@@ -65,44 +71,57 @@ public class Control implements ActionListener{
 			f.setVisible(true);
 		}
 		else if(evt.getSource()==f.getRisp1()){
-			try {
-				c.invio("$1$5$");
-				this.domanda();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			this.risposta(1);
 		}
 		else if(evt.getSource()==f.getRisp2()){
-			try {
-				c.invio("$2$5$");
-				this.domanda();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			this.risposta(2);
 		}
 		else if(evt.getSource()==f.getRisp3()){
-			try {
-				c.invio("$3$5$");
-				this.domanda();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			this.risposta(3);
 		}
 		else if(evt.getSource()==f.getRisp4()){
-			try {
-				c.invio("$4$5$");
-				this.domanda();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			this.risposta(4);
+		}
+		else if(evt.getSource()==v.getBtnRicomincia()) {
+			v.setVisible(false);
+			i.setVisible(true);
+			c.close();
 		}
 	}
 	
+	public void risposta(int num){
+		
+		conta.interrupted();
+		cont++;
+		if(cont<10) {
+			try {
+				c.invio("$"+num+"$"+f.getContatore().getText()+"$");
+				this.domanda();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else {
+			try {
+				c.invio("$5$5$");
+				this.risultato();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+	}
+	
 	public void domanda(){
+		
+		try {
+			conta=new Contatore(f);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		conta.start();
 		
 		String text="";
 		try {
@@ -129,6 +148,25 @@ public class Control implements ActionListener{
 			n = n1;
 		}
 	}
+	
+	public void risultato() {
+		String text="";
+		try {
+			text = c.getText();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		int n1,n = text.indexOf("$", 1);
+		String stringa = text.substring(1, n);
+		f.getDomanda().setText(stringa);
+		
+		f.setVisible(false);
+		v.setVisible(true);
+		v.getRisultato().setText(stringa);
+	}
+	
 	
 	
 }

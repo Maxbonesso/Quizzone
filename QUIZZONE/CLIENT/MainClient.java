@@ -4,6 +4,7 @@ import CONTROL.Control;
 import VIEW.Frame;
 import VIEW.Indirizzo;
 import VIEW.Intro;
+import VIEW.Vittoria;
 
 public class MainClient {
 
@@ -14,7 +15,9 @@ public class MainClient {
 		i.setVisible(false);
 		Indirizzo ind=new Indirizzo();
 		ind.setVisible(true);
-		Control c=new Control(f,i,ind);
+		Vittoria v =new Vittoria();
+		v.setVisible(false);
+		Control c=new Control(f,i,ind,v);
 	}
 
 }
