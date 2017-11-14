@@ -28,9 +28,13 @@ public class TConnessione extends Thread {
 	private InputStreamReader isr;
 	private PrintWriter out;
 	private DefaultListModel dlm;
+	private ArrayList<Integer> ind;
 	
 	public TConnessione(Socket socket, Socket s1, Gestione g, DefaultListModel dlm)
 	{
+		ind = new ArrayList<Integer>();
+		ind.add(0);
+		ind.add(0);
 		this.dlm = dlm;
 		this.s = socket;
 		this.g = g;
@@ -76,6 +80,7 @@ public class TConnessione extends Thread {
 				String invio = domanda.codificaCasuale();
 				
 				dlm.addElement(invio);
+				
 				//manda al primo client la domanda
 				out = new PrintWriter(s.getOutputStream(), true);
 				out.println(invio);
@@ -90,10 +95,11 @@ public class TConnessione extends Thread {
 				str1 = in.readLine();
 				dlm.addElement(str1);
 				
-				//riceve la risposta dal secodno client
+				//riceve la risposta dal secondo client
 				isr = new InputStreamReader(s1.getInputStream());
 				in = new BufferedReader(isr);
 				str2 = in.readLine();
+				dlm.addElement(str2);
 				
 				haiVinto();
 				
@@ -112,11 +118,17 @@ public class TConnessione extends Thread {
 				{
 					out = new PrintWriter(s.getOutputStream(), true);
 					out.println("$Hai vinto il gioco, congraturazioni!!$");
+					
+					out = new PrintWriter(s1.getOutputStream(), true);
+					out.println("$Hai perso$");
 				}
 				else if(vittorie.get(0) < vittorie.get(1))
 				{
 					out = new PrintWriter(s1.getOutputStream(), true);
 					out.println("$Hai vinto il gioco, congraturazioni!!$");
+					
+					out = new PrintWriter(s.getOutputStream(), true);
+					out.println("$Hai perso$");
 				}
 				else
 				{
@@ -141,12 +153,10 @@ public class TConnessione extends Thread {
 			if(tempo(str1) < tempo(str2))
 			{
 				comVittoria(0);
-				comSconfitta(1);
 			}
 			else if(tempo(str1) > tempo(str2))
 			{
 				comVittoria(1);
-				comSconfitta(1);
 			}
 			else
 			{
@@ -157,17 +167,10 @@ public class TConnessione extends Thread {
 		else if (haIndovinato(str1))
 		{
 			comVittoria(0);
-			comSconfitta(1);
 		}
 		else if (haIndovinato(str2))
 		{
 			comVittoria(1);
-			comSconfitta(0);
-		}
-		else
-		{
-			comSconfitta(0);
-			comSconfitta(1);
 		}
 		
 	}
@@ -196,56 +199,10 @@ public class TConnessione extends Thread {
 	
 	private boolean comVittoria(int n)
 	{
-		boolean ret = false;
+		boolean ret = true;
 
-			try {
-				
-				if(n == 0)
-				{
-					out = new PrintWriter(s.getOutputStream(), true);
-					out.println("$Congraturazioni hai vinto!!!$");
-					ret = true;
-				}
-				else if (n == 1)
-				{
-					out = new PrintWriter(s1.getOutputStream(), true);
-					out.println("$Congraturazioni hai vinto!!!$");
-					ret = true;
-				}
-				
-				vittorie.set(n, vittorie.get(n)+1);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		ind.set(n, ind.get(n) + 1);
 			
 		return ret;
-	}
-	
-	private boolean comSconfitta(int n)
-	{
-		boolean ret = false;
-
-		try {
-			
-			if(n == 0)
-			{
-				out = new PrintWriter(s.getOutputStream(), true);
-				out.println("$Risposta errata$");
-				ret = true;
-			}
-			else if (n == 1)
-			{
-				out = new PrintWriter(s1.getOutputStream(), true);
-				out.println("$Risposta errata$");
-				ret = true;
-			}
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	return ret;
 	}
 }

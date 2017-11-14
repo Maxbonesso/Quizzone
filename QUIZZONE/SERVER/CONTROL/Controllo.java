@@ -2,6 +2,8 @@ package CONTROL;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -26,6 +28,15 @@ public class Controllo implements ActionListener{
 		s.start();
 		
 		f.getBtnDomanda().addActionListener(this);
+		f.getTextFieldIp().setEditable(false);
+		try {
+			
+			f.getTextFieldIp().setText(InetAddress.getLocalHost().getHostAddress().toString());
+			
+		} catch (UnknownHostException et) {
+			// TODO Auto-generated catch block
+			et.printStackTrace();
+		}
 	}
 
 	@Override
