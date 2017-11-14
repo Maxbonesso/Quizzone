@@ -2,16 +2,15 @@ package CONTROL;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.InetAddress;
-import java.net.InetSocketAddress;
-import java.net.ServerSocket;
-import java.net.Socket;
 import java.util.ArrayList;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 import VIEW.Frame;
@@ -29,12 +28,14 @@ public class Control implements ActionListener{
 	private String luogo;
 	private int cont=0;
 	private Thread conta;
+	private boolean flag;
 
 	public Control(Frame f, Intro i, Indirizzo ind, Vittoria v) throws IOException {
 		this.f=f;
 		this.i=i;
 		this.ind = ind;
 		this.v = v;
+		conta = null;
 
 		f.getRisp1().addActionListener(this);
 		f.getRisp2().addActionListener(this);
@@ -52,6 +53,8 @@ public class Control implements ActionListener{
 			c=new Client(luogo);
 			ind.setVisible(false);
 			i.setVisible(true);
+			ImageIcon temp=new ImageIcon(Client.class.getResource("/media/want_to_play_game-iloveimg-resized.gif"));
+			i.getGifIntro().setIcon(temp);
 		}
 		else if(evt.getSource()==i.getBtnPlay()){
 			i.getBtnPlay().setEnabled(false);
@@ -91,7 +94,7 @@ public class Control implements ActionListener{
 	
 	public void risposta(int num){
 		
-		conta.interrupted();
+		flag = true;
 		cont++;
 		if(cont<10) {
 			try {
@@ -102,25 +105,17 @@ public class Control implements ActionListener{
 				e.printStackTrace();
 			}
 		}else {
-			try {
-				c.invio("$5$5$");
-				this.risultato();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			this.risultato();
 		}
 		
 	}
 	
 	public void domanda(){
 		
-		try {
-			conta=new Contatore(f);
-		} catch (InterruptedException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		flag = false;
+		if(conta != null)
+			conta.stop();
+		conta=new Contatore(f, flag);
 		conta.start();
 		
 		String text="";
@@ -165,6 +160,39 @@ public class Control implements ActionListener{
 		f.setVisible(false);
 		v.setVisible(true);
 		v.getRisultato().setText(stringa);
+		
+		ImageIcon img;
+		if(stringa.indexOf("vinto")!=-1){
+			media("/media/APPLAU22.WAV");
+			img=new ImageIcon(Client.class.getResource("/media/minions_applauso.gif"));
+		}
+		else if(stringa.indexOf("pareggio")!=-1){
+			media("/media/I-QUIT2.wav");
+			img=new ImageIcon(Client.class.getResource("/media/contrariato.gif"));
+		}
+		else{
+			media("/media/I-QUIT2.mp3");
+			img=new ImageIcon(Client.class.getResource("/media/allegri_rabbia.gif"));
+		}
+		
+        v.getGifVittoria().setIcon(img);
+	}
+	
+	
+	public void media(String path){
+		try {
+			AudioInputStream audioIn1;
+			audioIn1 = AudioSystem.getAudioInputStream(this.getClass().getResource(path));
+			Clip clip1 = AudioSystem.getClip();
+	        clip1.open(audioIn1);
+	        clip1.start();
+		} catch (UnsupportedAudioFileException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (LineUnavailableException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	

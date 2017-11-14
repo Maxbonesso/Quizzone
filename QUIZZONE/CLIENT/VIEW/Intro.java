@@ -17,7 +17,7 @@ public class Intro extends JFrame {
 	private JPanel contentPane;
 	private JLabel lblQ;
 	private JButton btnPlay;
-	private JLabel label;
+	private JLabel gifIntro;
 
 	public Intro() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -31,18 +31,18 @@ public class Intro extends JFrame {
 		lblQ.setForeground(new Color(0, 128, 128));
 		lblQ.setFont(new Font("Comic Sans MS", Font.BOLD, 54));
 		lblQ.setHorizontalAlignment(SwingConstants.CENTER);
-		lblQ.setBounds(73, 11, 343, 122);
+		lblQ.setBounds(73, 11, 343, 101);
 		contentPane.add(lblQ);
 		
 		btnPlay = new JButton("PLAY\r\n");
 		btnPlay.setForeground(new Color(255, 0, 0));
 		btnPlay.setFont(new Font("Comic Sans MS", Font.BOLD, 45));
-		btnPlay.setBounds(83, 263, 321, 122);
+		btnPlay.setBounds(83, 289, 321, 96);
 		contentPane.add(btnPlay);
 		
-		label = new JLabel("");
-		label.setBounds(29, 119, 414, 133);
-		contentPane.add(label);
+		gifIntro = new JLabel("");
+		gifIntro.setBounds(65, 104, 355, 174);
+		contentPane.add(gifIntro);
 	}
 
 	public JButton getBtnPlay() {
@@ -51,6 +51,14 @@ public class Intro extends JFrame {
 
 	public void setBtnPlay(JButton btnPlay) {
 		this.btnPlay = btnPlay;
+	}
+
+	public JLabel getGifIntro() {
+		return gifIntro;
+	}
+
+	public void setGifIntro(JLabel gifIntro) {
+		this.gifIntro = gifIntro;
 	}
 
 }

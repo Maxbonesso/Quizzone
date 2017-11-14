@@ -57,9 +57,6 @@ public class Client {
 	
 	public void invio(String n) throws IOException
 	{
-		if(n.indexOf("0")!=-1) {
-			n="$timer scaduto$";
-		}
 		PrintWriter out = new PrintWriter (s.getOutputStream(), true);
 		out.println(n);
 	}
