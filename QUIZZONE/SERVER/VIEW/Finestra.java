@@ -7,6 +7,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JList;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
 
 public class Finestra extends JFrame {
 
@@ -15,6 +17,7 @@ public class Finestra extends JFrame {
 	private JList list;
 	private DefaultListModel defaultListModel;
 	private JButton btnDomanda;
+	private JTextField textFieldIp;
 	
 	/**
 	 * Create the frame.
@@ -28,7 +31,7 @@ public class Finestra extends JFrame {
 		contentPane.setLayout(null);
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(31, 33, 365, 155);
+		scrollPane.setBounds(30, 62, 365, 155);
 		contentPane.add(scrollPane);
 		
 		list = new JList();
@@ -37,8 +40,17 @@ public class Finestra extends JFrame {
 		scrollPane.setViewportView(list);
 		
 		btnDomanda = new JButton("Domanda");
-		btnDomanda.setBounds(164, 213, 89, 23);
+		btnDomanda.setBounds(164, 228, 89, 23);
 		contentPane.add(btnDomanda);
+		
+		JLabel lblLindirizzoDelServer = new JLabel("L'indirizzo del server \u00E8:");
+		lblLindirizzoDelServer.setBounds(30, 22, 160, 14);
+		contentPane.add(lblLindirizzoDelServer);
+		
+		textFieldIp = new JTextField();
+		textFieldIp.setBounds(210, 19, 141, 20);
+		contentPane.add(textFieldIp);
+		textFieldIp.setColumns(10);
 	}
 
 	public DefaultListModel getDefaultListModel() {
@@ -47,5 +59,9 @@ public class Finestra extends JFrame {
 
 	public JButton getBtnDomanda() {
 		return btnDomanda;
+	}
+
+	public JTextField getTextFieldIp() {
+		return textFieldIp;
 	}
 }
