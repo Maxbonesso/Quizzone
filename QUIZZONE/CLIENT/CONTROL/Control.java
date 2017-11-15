@@ -105,6 +105,7 @@ public class Control implements ActionListener{
 				e.printStackTrace();
 			}
 		}else {
+			
 			this.risultato();
 		}
 		
@@ -155,7 +156,6 @@ public class Control implements ActionListener{
 		
 		int n1,n = text.indexOf("$", 1);
 		String stringa = text.substring(1, n);
-		f.getDomanda().setText(stringa);
 		
 		f.setVisible(false);
 		v.setVisible(true);
