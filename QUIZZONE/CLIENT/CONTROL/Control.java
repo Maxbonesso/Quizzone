@@ -26,7 +26,7 @@ public class Control implements ActionListener{
 	private Vittoria v;
 	private Client c;
 	private String luogo;
-	private int cont=0;
+	private int cont=1;
 	private Thread conta;
 	private boolean flag;
 
@@ -88,6 +88,8 @@ public class Control implements ActionListener{
 		else if(evt.getSource()==v.getBtnRicomincia()) {
 			v.setVisible(false);
 			i.setVisible(true);
+			i.getBtnPlay().setEnabled(true);
+			cont=1;
 			c.close();
 		}
 	}
@@ -95,15 +97,17 @@ public class Control implements ActionListener{
 	public void risposta(int num){
 		
 		flag = true;
-		cont++;
+		try {
+			c.invio("$"+num+"$"+f.getContatore().getText()+"$");
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		if(cont<10) {
-			try {
-				c.invio("$"+num+"$"+f.getContatore().getText()+"$");
-				this.domanda();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			
+			this.domanda();
+			cont++;
 		}else {
 			
 			this.risultato();
@@ -113,10 +117,9 @@ public class Control implements ActionListener{
 	
 	public void domanda(){
 		
-		flag = false;
 		if(conta != null)
 			conta.stop();
-		conta=new Contatore(f, flag);
+		conta=new Contatore(f);
 		conta.start();
 		
 		String text="";
@@ -148,7 +151,9 @@ public class Control implements ActionListener{
 	public void risultato() {
 		String text="";
 		try {
+			System.out.println("vittoria");
 			text = c.getText();
+			System.out.println("after");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -156,10 +161,6 @@ public class Control implements ActionListener{
 		
 		int n1,n = text.indexOf("$", 1);
 		String stringa = text.substring(1, n);
-		
-		f.setVisible(false);
-		v.setVisible(true);
-		v.getRisultato().setText(stringa);
 		
 		ImageIcon img;
 		if(stringa.indexOf("vinto")!=-1){
@@ -171,11 +172,15 @@ public class Control implements ActionListener{
 			img=new ImageIcon(Client.class.getResource("/media/contrariato.gif"));
 		}
 		else{
-			media("/media/I-QUIT2.mp3");
+			media("/media/I-QUIT2.wav");
 			img=new ImageIcon(Client.class.getResource("/media/allegri_rabbia.gif"));
 		}
 		
         v.getGifVittoria().setIcon(img);
+
+		f.setVisible(false);
+		v.setVisible(true);
+		v.getRisultato().setText(stringa);
 	}
 	
 	

@@ -94,7 +94,7 @@ public class Domanda {
 	{
 		int flag = 1, n;
 		ArrayList<Integer> ind = new ArrayList<Integer>();
-		while(flag<4)
+		while(flag<=4)
 		{
 			do
 			{

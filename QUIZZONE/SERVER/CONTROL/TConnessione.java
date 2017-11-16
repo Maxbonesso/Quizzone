@@ -28,13 +28,9 @@ public class TConnessione extends Thread {
 	private InputStreamReader isr;
 	private PrintWriter out;
 	private DefaultListModel dlm;
-	private ArrayList<Integer> ind;
 	
 	public TConnessione(Socket socket, Socket s1, Gestione g, DefaultListModel dlm)
 	{
-		ind = new ArrayList<Integer>();
-		ind.add(0);
-		ind.add(0);
 		this.dlm = dlm;
 		this.s = socket;
 		this.g = g;
@@ -77,7 +73,7 @@ public class TConnessione extends Thread {
 				}while(indici.contains(n));
 				Domanda domanda = g.getDomanda(n);
 				d = domanda;
-				String invio = domanda.codificaCasuale();
+				String invio = d.codificaCasuale();
 				
 				dlm.addElement(invio);
 				
@@ -116,6 +112,7 @@ public class TConnessione extends Thread {
 				
 				if(vittorie.get(0) > vittorie.get(1))
 				{
+					
 					out = new PrintWriter(s.getOutputStream(), true);
 					out.println("$Hai vinto il gioco, congraturazioni!!$");
 					
@@ -124,6 +121,7 @@ public class TConnessione extends Thread {
 				}
 				else if(vittorie.get(0) < vittorie.get(1))
 				{
+					
 					out = new PrintWriter(s1.getOutputStream(), true);
 					out.println("$Hai vinto il gioco, congraturazioni!!$");
 					
@@ -132,6 +130,7 @@ public class TConnessione extends Thread {
 				}
 				else
 				{
+					
 					out = new PrintWriter(s.getOutputStream(), true);
 					out.println("$Pareggio, congraturazioni a entrambi$");
 					
@@ -179,10 +178,10 @@ public class TConnessione extends Thread {
 	{
 		boolean ret = false;
 		
-		int n = str1.indexOf("$", 1);
+		int n = s.indexOf("$", 1);
 		
-		dlm.addElement(Integer.parseInt(str1.substring(1, n)));
-		if(Integer.parseInt(str1.substring(1, n)) == d.getRispG())
+		dlm.addElement(Integer.parseInt(s.substring(1, n)));
+		if(Integer.parseInt(s.substring(1, n)) == d.getRispG())
 			ret = true;
 		
 		return ret;
@@ -190,9 +189,9 @@ public class TConnessione extends Thread {
 	
 	private int tempo(String z)
 	{
-		int n = str1.indexOf("$", 1);
-		int n1 = str1.indexOf("$", n+1);
-		String stringa1 = str1.substring(n+1, n1);
+		int n = z.indexOf("$", 1);
+		int n1 = z.indexOf("$", n+1);
+		String stringa1 = z.substring(n+1, n1);
 		
 		return Integer.parseInt(stringa1);
 	}
@@ -201,7 +200,7 @@ public class TConnessione extends Thread {
 	{
 		boolean ret = true;
 
-		ind.set(n, ind.get(n) + 1);
+		vittorie.set(n, vittorie.get(n) + 1);
 			
 		return ret;
 	}
