@@ -123,8 +123,6 @@ public class Domanda {
 				switch(n2)
 				{
 					case 1:
-						risposta_1 = risposta_1;
-						risposta_1 = app;
 						ret = true;
 					break;
 					case 2:
@@ -154,8 +152,6 @@ public class Domanda {
 						ret = true;
 					break;
 					case 2:
-						risposta_2 = risposta_2;
-						risposta_2 = app;
 						ret = true;
 					break;
 					case 3:
@@ -185,8 +181,6 @@ public class Domanda {
 						ret = true;
 					break;
 					case 3:
-						risposta_3 = risposta_3;
-						risposta_3 = app;
 						ret = true;
 					break;
 					case 4:
@@ -216,8 +210,6 @@ public class Domanda {
 						ret = true;
 					break;
 					case 4:
-						risposta_4 = risposta_4;
-						risposta_4 = app;
 						ret = true;
 					break;
 				}

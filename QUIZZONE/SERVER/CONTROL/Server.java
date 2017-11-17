@@ -11,13 +11,12 @@ import MODEL.Gestione;
 public class Server extends Thread {
 	
 	private ServerSocket ss;
-	private DefaultListModel dlm;
+	private DefaultListModel<String> dlm;
 	private int connessioni;
 	private Gestione g;
 	
-	public Server(DefaultListModel dlm, int porta, Gestione g)
+	public Server(DefaultListModel<String> dlm, int porta, Gestione g)
 	{
-		this.g = g;
 		this.dlm = dlm;
 		try {
 			ss = new ServerSocket(porta);
@@ -35,11 +34,10 @@ public class Server extends Thread {
 	{
 		while(true)
 		{
-			stampaDati();
-			
 			//riceve la connessione
 			Socket s;
 			Socket s1;
+			
 			try {
 				s = ss.accept();
 				connessioni++;
@@ -48,7 +46,7 @@ public class Server extends Thread {
 				
 				s1 = ss.accept();
 				connessioni++;
-				TConnessione tc = new TConnessione(s, s1, g, dlm);
+				TConnessione tc = new TConnessione(s, s1, g);
 				tc.start();
 				
 				stampaDati();

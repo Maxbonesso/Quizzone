@@ -28,6 +28,7 @@ INSERT INTO quiz (id, domanda, risposta, risposta_1, risposta_2, risposta_3) VAL
 (13, 'Chi scrisse la canzone «Generale»', 'Francesco De Gregori.', 'Francesco Guccini', 'Rino Gaetano.', 'Franco Battiato.'),
 (14, 'Paul Verlanie era un...', 'un poeta francese.', 'uno scrittore e medico francese.', 'uno poeta spagnolo.', 'un filosofo belga.'),
 (15, 'Quali animali trainano la slitta di Babbo Natale?', 'Delle renne.', 'Dei buoi.', 'Dei cani da slitta.', 'Dei muli.'),
+(16, 'Chi � stato elimanato dalla svezia agli spareggi per il mondiale 2018?', 'Italia', 'Spagna', 'Brasile', 'Ventura'),
 (17, 'Se vedo la fontana di Trevi, mi trovo a...', 'Roma', 'Pescara', 'Milano', 'Monaco'),
 (18, 'La branca della medicina che studia la pelle si chiama...', 'dermatologia.', 'chirurgia.', 'ematologia.', 'nefrologia.'),
 (19, 'Chi inventó la corrente elettrica alternata?', 'Nikola Tesla.', 'Levi Strauss.', 'Thomas Alva Edison.', 'Antonio Meucci.'),

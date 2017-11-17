@@ -8,8 +8,6 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Random;
 
-import javax.swing.DefaultListModel;
-
 import MODEL.Domanda;
 import MODEL.Gestione;
 
@@ -27,11 +25,9 @@ public class TConnessione extends Thread {
 	private ArrayList<Integer> vittorie;
 	private InputStreamReader isr;
 	private PrintWriter out;
-	private DefaultListModel dlm;
 	
-	public TConnessione(Socket socket, Socket s1, Gestione g, DefaultListModel dlm)
+	public TConnessione(Socket socket, Socket s1, Gestione g)
 	{
-		this.dlm = dlm;
 		this.s = socket;
 		this.g = g;
 		s = socket;
@@ -75,8 +71,6 @@ public class TConnessione extends Thread {
 				d = domanda;
 				String invio = d.codificaCasuale();
 				
-				dlm.addElement(invio);
-				
 				//manda al primo client la domanda
 				out = new PrintWriter(s.getOutputStream(), true);
 				out.println(invio);
@@ -89,13 +83,11 @@ public class TConnessione extends Thread {
 				isr = new InputStreamReader(s.getInputStream());
 				BufferedReader in = new BufferedReader(isr);
 				str1 = in.readLine();
-				dlm.addElement(str1);
 				
 				//riceve la risposta dal secondo client
 				isr = new InputStreamReader(s1.getInputStream());
 				in = new BufferedReader(isr);
 				str2 = in.readLine();
-				dlm.addElement(str2);
 				
 				haiVinto();
 				
@@ -180,7 +172,6 @@ public class TConnessione extends Thread {
 		
 		int n = s.indexOf("$", 1);
 		
-		dlm.addElement(Integer.parseInt(s.substring(1, n)));
 		if(Integer.parseInt(s.substring(1, n)) == d.getRispG())
 			ret = true;
 		
