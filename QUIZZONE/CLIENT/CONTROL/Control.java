@@ -74,16 +74,16 @@ public class Control implements ActionListener{
 			f.setVisible(true);
 		}
 		else if(evt.getSource()==f.getRisp1()){
-			this.risposta(1);
+			this.risposta(1,false);
 		}
 		else if(evt.getSource()==f.getRisp2()){
-			this.risposta(2);
+			this.risposta(2,false);
 		}
 		else if(evt.getSource()==f.getRisp3()){
-			this.risposta(3);
+			this.risposta(3,false);
 		}
 		else if(evt.getSource()==f.getRisp4()){
-			this.risposta(4);
+			this.risposta(4,false);
 		}
 		else if(evt.getSource()==v.getBtnRicomincia()) {
 			v.setVisible(false);
@@ -94,9 +94,11 @@ public class Control implements ActionListener{
 		}
 	}
 	
-	public void risposta(int num){
+	public void risposta(int num, boolean flag){
 		
-		flag = true;
+		if(conta != null && flag==false)
+			conta.stop();
+		
 		try {
 			c.invio("$"+num+"$"+f.getContatore().getText()+"$");
 			
@@ -105,7 +107,7 @@ public class Control implements ActionListener{
 			e.printStackTrace();
 		}
 		if(cont<10) {
-			
+			System.out.println("domanda"+cont);
 			this.domanda();
 			cont++;
 		}else {
@@ -117,9 +119,7 @@ public class Control implements ActionListener{
 	
 	public void domanda(){
 		
-		if(conta != null)
-			conta.stop();
-		conta=new Contatore(f);
+		conta=new Contatore(f, this);
 		conta.start();
 		
 		String text="";
@@ -167,7 +167,7 @@ public class Control implements ActionListener{
 			media("/media/APPLAU22.WAV");
 			img=new ImageIcon(Client.class.getResource("/media/minions_applauso.gif"));
 		}
-		else if(stringa.indexOf("pareggio")!=-1){
+		else if(stringa.indexOf("Pareggio")!=-1){
 			media("/media/I-QUIT2.wav");
 			img=new ImageIcon(Client.class.getResource("/media/contrariato.gif"));
 		}
@@ -198,6 +198,11 @@ public class Control implements ActionListener{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public void scadutoTimer(){
+		System.out.println("scaduto");
+		this.risposta(0,true);
 	}
 	
 	
