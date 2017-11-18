@@ -8,6 +8,7 @@ import javax.swing.JList;
 import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.JButton;
 
 public class Finestra extends JFrame {
 
@@ -45,6 +46,7 @@ public class Finestra extends JFrame {
 		textFieldIp.setBounds(210, 19, 141, 20);
 		contentPane.add(textFieldIp);
 		textFieldIp.setColumns(10);
+		textFieldIp.setEditable(false);
 	}
 
 	public DefaultListModel<String> getDefaultListModel() {

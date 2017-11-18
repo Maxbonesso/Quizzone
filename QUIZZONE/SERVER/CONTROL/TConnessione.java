@@ -26,12 +26,11 @@ public class TConnessione extends Thread {
 	private InputStreamReader isr;
 	private PrintWriter out;
 	
-	public TConnessione(Socket socket, Socket s1, Gestione g)
+	public TConnessione(Socket socket, Socket socket1, Gestione g)
 	{
 		this.s = socket;
-		this.g = g;
-		s = socket;
-		this.s1 = s1;
+		this.g = new Gestione();
+		this.s1 = socket1;
 		flag = 0;
 		indici = new ArrayList<Integer>();
 		vittorie = new ArrayList<Integer>();
@@ -67,8 +66,8 @@ public class TConnessione extends Thread {
 				{
 					n = rand.nextInt(19) + 1;
 				}while(indici.contains(n));
-				Domanda domanda = g.getDomanda(n);
-				d = domanda;
+				
+				d = g.getDomanda(n);
 				String invio = d.codificaCasuale();
 				
 				//manda al primo client la domanda
@@ -89,7 +88,7 @@ public class TConnessione extends Thread {
 				in = new BufferedReader(isr);
 				str2 = in.readLine();
 				
-				haiVinto();
+				haiVinto();		//metodo che controllo chi ha indovinato ed assegna i punteggi
 				
 				flag++;
 			} catch (IOException e) {
@@ -97,7 +96,7 @@ public class TConnessione extends Thread {
 				e.printStackTrace();
 			}
 			
-		//comunicazioni delle vittorie e delle sconfitte ai client
+		//comunicazioni delle vittorie, delle sconfitte e dei pareggi ai client
 		}
 		
 			try {
@@ -106,28 +105,28 @@ public class TConnessione extends Thread {
 				{
 					
 					out = new PrintWriter(s.getOutputStream(), true);
-					out.println("$Hai vinto il gioco, congraturazioni!!$");
+					out.println("$Hai vinto il gioco, congraturazioni!!$" + vittorie.get(0) + "$");
 					
 					out = new PrintWriter(s1.getOutputStream(), true);
-					out.println("$Hai perso$");
+					out.println("$Hai perso$" + vittorie.get(1) + "$");
 				}
 				else if(vittorie.get(0) < vittorie.get(1))
 				{
 					
 					out = new PrintWriter(s1.getOutputStream(), true);
-					out.println("$Hai vinto il gioco, congraturazioni!!$");
+					out.println("$Hai vinto il gioco, congraturazioni!!$" + vittorie.get(0) + "$");
 					
 					out = new PrintWriter(s.getOutputStream(), true);
-					out.println("$Hai perso$");
+					out.println("$Hai perso$" + vittorie.get(1) + "$");
 				}
 				else
 				{
 					
 					out = new PrintWriter(s.getOutputStream(), true);
-					out.println("$Pareggio, congraturazioni a entrambi$");
+					out.println("$Pareggio, congraturazioni a entrambi$" + vittorie.get(0) + "$");
 					
 					out = new PrintWriter(s1.getOutputStream(), true);
-					out.println("$Pareggio, congraturazioni a entrambi$");
+					out.println("$Pareggio, congraturazioni a entrambi$" + vittorie.get(1) + "$");
 				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -139,9 +138,9 @@ public class TConnessione extends Thread {
 	
 	private void haiVinto()
 	{	
-		if(haIndovinato(str1) && haIndovinato(str2))
+		if(haIndovinato(str1) && haIndovinato(str2))	//tutti e due i giocatori hanno indovinato
 		{
-			if(tempo(str1) < tempo(str2))
+			if(tempo(str1) < tempo(str2))			//calcola chi ha risposto nel tempo minore
 			{
 				comVittoria(0);
 			}
@@ -149,24 +148,24 @@ public class TConnessione extends Thread {
 			{
 				comVittoria(1);
 			}
-			else
+			else						//in caso di tempo uguale assegna a tutti e due
 			{
 				comVittoria(0);
 				comVittoria(1);
 			}
 		}
-		else if (haIndovinato(str1))
+		else if (haIndovinato(str1))		//uno solo ha indovinato
 		{
 			comVittoria(0);
 		}
-		else if (haIndovinato(str2))
+		else if (haIndovinato(str2))		//uno solo ha indovinato
 		{
 			comVittoria(1);
 		}
 		
 	}
 	
-	private boolean haIndovinato(String s)
+	private boolean haIndovinato(String s)			//capisce se il client ha indovinato la risposta
 	{
 		boolean ret = false;
 		
@@ -178,7 +177,7 @@ public class TConnessione extends Thread {
 		return ret;
 	}
 	
-	private int tempo(String z)
+	private int tempo(String z)						//ritorna il tempo di risposta
 	{
 		int n = z.indexOf("$", 1);
 		int n1 = z.indexOf("$", n+1);
@@ -187,7 +186,7 @@ public class TConnessione extends Thread {
 		return Integer.parseInt(stringa1);
 	}
 	
-	private boolean comVittoria(int n)
+	private boolean comVittoria(int n)				//gestisce il punteggio totale
 	{
 		boolean ret = true;
 
