@@ -20,6 +20,7 @@ public class Indirizzo extends JFrame {
 	private JButton btnInserisci;
 
 	public Indirizzo() {
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 350, 220);
 		contentPane = new JPanel();

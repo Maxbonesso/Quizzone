@@ -53,7 +53,7 @@ public class Control implements ActionListener{
 			c=new Client(luogo);
 			ind.setVisible(false);
 			i.setVisible(true);
-			ImageIcon temp=new ImageIcon(Client.class.getResource("/media/want_to_play_game-iloveimg-resized.gif"));
+			ImageIcon temp=new ImageIcon(Client.class.getResource("/media/output_trgVnE.gif"));
 			i.getGifIntro().setIcon(temp);
 		}
 		else if(evt.getSource()==i.getBtnPlay()){
@@ -161,6 +161,10 @@ public class Control implements ActionListener{
 		
 		int n1,n = text.indexOf("$", 1);
 		String stringa = text.substring(1, n);
+		n1 = text.indexOf("$", n+1);
+		stringa = text.substring(n+1, n1);
+		v.getEsatte().setText("Numero risposte indovinate: "+stringa);
+		
 		
 		ImageIcon img;
 		if(stringa.indexOf("vinto")!=-1){

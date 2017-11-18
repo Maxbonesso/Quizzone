@@ -20,6 +20,7 @@ public class Intro extends JFrame {
 	private JLabel gifIntro;
 
 	public Intro() {
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 500, 450);
 		contentPane = new JPanel();
@@ -41,7 +42,7 @@ public class Intro extends JFrame {
 		contentPane.add(btnPlay);
 		
 		gifIntro = new JLabel("");
-		gifIntro.setBounds(65, 104, 355, 174);
+		gifIntro.setBounds(65, 103, 355, 174);
 		contentPane.add(gifIntro);
 	}
 
