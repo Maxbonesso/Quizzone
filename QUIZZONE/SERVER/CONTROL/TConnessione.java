@@ -140,11 +140,11 @@ public class TConnessione extends Thread {
 	{	
 		if(haIndovinato(str1) && haIndovinato(str2))	//tutti e due i giocatori hanno indovinato
 		{
-			if(tempo(str1) < tempo(str2))			//calcola chi ha risposto nel tempo minore
+			if(tempo(str1) > tempo(str2))			//calcola chi ha risposto nel tempo minore
 			{
 				comVittoria(0);
 			}
-			else if(tempo(str1) > tempo(str2))
+			else if(tempo(str1) < tempo(str2))
 			{
 				comVittoria(1);
 			}
