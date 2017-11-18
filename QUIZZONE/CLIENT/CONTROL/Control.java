@@ -48,15 +48,32 @@ public class Control implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent evt) {
+		Clip clip1=null;
+		try {
+			AudioInputStream audioIn1;
+			audioIn1 = AudioSystem.getAudioInputStream(this.getClass().getResource("/media/canzone.wav"));
+			clip1 = AudioSystem.getClip();
+	        clip1.open(audioIn1);
+		} catch (UnsupportedAudioFileException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (LineUnavailableException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		if(evt.getSource()==ind.getBtnInserisci()){
 			luogo=ind.getIndirizzo().getText();
 			c=new Client(luogo);
 			ind.setVisible(false);
 			i.setVisible(true);
 			ImageIcon temp=new ImageIcon(Client.class.getResource("/media/output_trgVnE.gif"));
+	        clip1.start();
+	        
 			i.getGifIntro().setIcon(temp);
 		}
 		else if(evt.getSource()==i.getBtnPlay()){
+			clip1.stop();
 			i.getBtnPlay().setEnabled(false);
 			
 			c.creaConnessione();
