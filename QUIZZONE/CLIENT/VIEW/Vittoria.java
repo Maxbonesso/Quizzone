@@ -19,6 +19,7 @@ public class Vittoria extends JFrame {
 	private JButton btnRicomincia;
 	private JLabel gifVittoria;
 	private JLabel esatte;
+	private JLabel congrat;
 
 	public Vittoria() {
 		setResizable(false);
@@ -32,8 +33,8 @@ public class Vittoria extends JFrame {
 		risultato = new JLabel("");
 		risultato.setForeground(new Color(0, 128, 128));
 		risultato.setHorizontalAlignment(SwingConstants.CENTER);
-		risultato.setFont(new Font("Tahoma", Font.BOLD, 25));
-		risultato.setBounds(29, 24, 373, 99);
+		risultato.setFont(new Font("Tahoma", Font.BOLD, 30));
+		risultato.setBounds(29, 24, 373, 63);
 		contentPane.add(risultato);
 		
 		btnRicomincia = new JButton("RICOMINCIA");
@@ -46,10 +47,17 @@ public class Vittoria extends JFrame {
 		contentPane.add(gifVittoria);
 		
 		esatte = new JLabel("");
-		esatte.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		esatte.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		esatte.setHorizontalAlignment(SwingConstants.CENTER);
-		esatte.setBounds(65, 140, 304, 63);
+		esatte.setBounds(65, 166, 304, 47);
 		contentPane.add(esatte);
+		
+		congrat = new JLabel("");
+		congrat.setHorizontalAlignment(SwingConstants.CENTER);
+		congrat.setForeground(new Color(0, 128, 128));
+		congrat.setFont(new Font("Tahoma", Font.BOLD, 23));
+		congrat.setBounds(29, 98, 373, 63);
+		contentPane.add(congrat);
 	}
 
 	public JLabel getRisultato() {
@@ -82,5 +90,13 @@ public class Vittoria extends JFrame {
 
 	public void setEsatte(JLabel esatte) {
 		this.esatte = esatte;
+	}
+
+	public JLabel getCongrat() {
+		return congrat;
+	}
+
+	public void setCongrat(JLabel congrat) {
+		this.congrat = congrat;
 	}
 }

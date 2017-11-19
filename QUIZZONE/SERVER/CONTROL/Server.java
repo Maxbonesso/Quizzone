@@ -14,9 +14,11 @@ public class Server extends Thread {
 	private DefaultListModel<String> dlm;
 	private int connessioni;
 	private Gestione g;
+	private int partita;
 	
 	public Server(DefaultListModel<String> dlm, int porta, Gestione g)
 	{
+		this.g = g;
 		this.dlm = dlm;
 		try {
 			ss = new ServerSocket(porta);
@@ -27,6 +29,7 @@ public class Server extends Thread {
 			System.exit(1);
 		}
 		connessioni = 0;
+		partita = 0;
 	}
 	
 	@Override
@@ -41,15 +44,18 @@ public class Server extends Thread {
 			try {
 				s = ss.accept();
 				connessioni++;
-				
 				stampaDati();
 				
 				s1 = ss.accept();
 				connessioni++;
-				TConnessione tc = new TConnessione(s, s1, g);
+				stampaDati();
+				
+				Thread tc = new TConnessione(s, s1, g);
 				tc.start();
 				
-				stampaDati();
+				partita++;
+				stampaPartita();
+				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -63,6 +69,17 @@ public class Server extends Thread {
 		String s;
 		
 		s= new String("Si sono connessi " + connessioni +" client al server");
+		dlm.addElement(s);
+	}
+	
+	private void stampaPartita()
+	{
+		String s;
+		
+		if(partita == 1)
+			s= new String("è stata iniziata " + partita +" partita");
+		else
+			s= new String("Sono state iniziate " + partita +" partite");
 		dlm.addElement(s);
 	}
 }

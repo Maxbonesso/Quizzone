@@ -2,6 +2,7 @@ package CONTROL;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+
 import MODEL.Gestione;
 import VIEW.Finestra;
 
@@ -15,10 +16,10 @@ public class Controllo{
 		this.g = g;
 
 		f.setVisible(true);
-		Server s = new Server(f.getDefaultListModel(), 9999, g);
+		
+		Thread s = new Server(f.getDefaultListModel(), 9999, g);
 		s.start();
 		
-		f.getTextFieldIp().setEditable(false);
 		try {
 			
 			f.getTextFieldIp().setText(InetAddress.getLocalHost().getHostAddress().toString());

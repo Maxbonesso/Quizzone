@@ -33,6 +33,7 @@ public class Gestione {
 		
 		try {	// cattura errore e provvede a gestire il caso di non errore
 			
+			
 			/**
 			 * jdbc: --> driver per connettersi ad uno specifico DBMS
 			 * mysql:// --> DBMS usato (non funziona senza MySQL Connector)

@@ -29,6 +29,7 @@ public class Control implements ActionListener{
 	private int cont=1;
 	private Thread conta;
 	private boolean flag;
+	private Clip clip1;
 
 	public Control(Frame f, Intro i, Indirizzo ind, Vittoria v) throws IOException {
 		this.f=f;
@@ -48,28 +49,13 @@ public class Control implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent evt) {
-		Clip clip1=null;
-		try {
-			AudioInputStream audioIn1;
-			audioIn1 = AudioSystem.getAudioInputStream(this.getClass().getResource("/media/canzone.wav"));
-			clip1 = AudioSystem.getClip();
-	        clip1.open(audioIn1);
-		} catch (UnsupportedAudioFileException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (LineUnavailableException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
 		if(evt.getSource()==ind.getBtnInserisci()){
 			luogo=ind.getIndirizzo().getText();
 			c=new Client(luogo);
 			ind.setVisible(false);
 			i.setVisible(true);
 			ImageIcon temp=new ImageIcon(Client.class.getResource("/media/output_trgVnE.gif"));
-	        clip1.start();
-	        
+			suonoIntro();	        
 			i.getGifIntro().setIcon(temp);
 		}
 		else if(evt.getSource()==i.getBtnPlay()){
@@ -106,6 +92,7 @@ public class Control implements ActionListener{
 			v.setVisible(false);
 			i.setVisible(true);
 			i.getBtnPlay().setEnabled(true);
+			suonoIntro();
 			cont=1;
 			c.close();
 		}
@@ -177,22 +164,28 @@ public class Control implements ActionListener{
 		}
 		
 		int n1,n = text.indexOf("$", 1);
-		String stringa = text.substring(1, n);
+		String stringa, ris = text.substring(1, n);
 		n1 = text.indexOf("$", n+1);
 		stringa = text.substring(n+1, n1);
 		v.getEsatte().setText("Numero risposte indovinate: "+stringa);
 		
 		
 		ImageIcon img;
-		if(stringa.indexOf("vinto")!=-1){
+		if(ris.equals("vinto")){
+			v.getRisultato().setText("HAI VINTOO!!");
+			v.getCongrat().setText("Congratulazioniii!!");
 			media("/media/APPLAU22.WAV");
 			img=new ImageIcon(Client.class.getResource("/media/minions_applauso.gif"));
 		}
-		else if(stringa.indexOf("Pareggio")!=-1){
+		else if(ris.equals("pareggio")){
+			v.getRisultato().setText("PAREGGIO!");
+			v.getCongrat().setText("Ritenta,sarai più fortunato");
 			media("/media/I-QUIT2.wav");
 			img=new ImageIcon(Client.class.getResource("/media/contrariato.gif"));
 		}
 		else{
+			v.getRisultato().setText("HAI PERSO!");
+			v.getCongrat().setText("Ritenta,sarai più fortunato");
 			media("/media/I-QUIT2.wav");
 			img=new ImageIcon(Client.class.getResource("/media/allegri_rabbia.gif"));
 		}
@@ -201,7 +194,6 @@ public class Control implements ActionListener{
 
 		f.setVisible(false);
 		v.setVisible(true);
-		v.getRisultato().setText(stringa);
 	}
 	
 	
@@ -226,6 +218,23 @@ public class Control implements ActionListener{
 		this.risposta(0,true);
 	}
 	
+	
+	public void suonoIntro() {
+		try {
+			AudioInputStream audioIn1;
+			audioIn1 = AudioSystem.getAudioInputStream(this.getClass().getResource("/media/canzone.wav"));
+			clip1 = AudioSystem.getClip();
+	        clip1.open(audioIn1);
+		} catch (UnsupportedAudioFileException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (LineUnavailableException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+        clip1.start();
+	}
 	
 	
 }
