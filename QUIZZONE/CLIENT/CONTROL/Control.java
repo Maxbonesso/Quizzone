@@ -192,6 +192,7 @@ public class Control implements ActionListener{
 		v.setVisible(true);
 	}
 	
+	//audio
 	
 	public void media(String path){
 		try {
@@ -245,7 +246,7 @@ public class Control implements ActionListener{
 	}
 	
 	
-	//suono
+	//suono intro
 	public void suonoIntro() {
 		try {
 			AudioInputStream audioIn1;
