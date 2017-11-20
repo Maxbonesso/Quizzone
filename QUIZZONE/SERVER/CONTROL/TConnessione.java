@@ -66,6 +66,7 @@ public class TConnessione extends Thread {
 				{
 					n = rand.nextInt(19) + 1;
 				}while(indici.contains(n));
+				indici.add(n);
 				d = g.getDomanda(n);
 				String invio = d.codificaCasuale();
 				
