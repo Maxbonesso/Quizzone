@@ -13,13 +13,14 @@ import java.awt.Color;
 import javax.swing.JTextField;
 import javax.swing.JRadioButton;
 import javax.swing.JButton;
+import javax.swing.JTextArea;
 
 public class Frame extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField domanda;
 	private JLabel lblNewLabel, contatore;
 	private JButton risp1, risp2, risp3, risp4;
+	private JTextArea domanda;
 
 	public Frame() {
 		setResizable(false);
@@ -38,28 +39,20 @@ public class Frame extends JFrame {
 		lblNewLabel.setBounds(138, 11, 234, 53);
 		contentPane.add(lblNewLabel);
 		
-		domanda = new JTextField();
-		domanda.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		domanda.setHorizontalAlignment(SwingConstants.CENTER);
-		domanda.setEditable(false);
-		domanda.setBounds(10, 75, 464, 74);
-		contentPane.add(domanda);
-		domanda.setColumns(10);
-		
 		risp1 = new JButton("");
-		risp1.setBounds(10, 208, 464, 34);
+		risp1.setBounds(10, 208, 474, 34);
 		contentPane.add(risp1);
 		
 		risp2 = new JButton("");
-		risp2.setBounds(10, 258, 464, 34);
+		risp2.setBounds(10, 258, 474, 34);
 		contentPane.add(risp2);
 		
 		risp3 = new JButton("");
-		risp3.setBounds(10, 308, 464, 34);
+		risp3.setBounds(10, 308, 474, 34);
 		contentPane.add(risp3);
 		
 		risp4 = new JButton("");
-		risp4.setBounds(10, 358, 464, 34);
+		risp4.setBounds(10, 358, 474, 34);
 		contentPane.add(risp4);
 		
 		contatore = new JLabel("");
@@ -67,13 +60,20 @@ public class Frame extends JFrame {
 		contatore.setHorizontalAlignment(SwingConstants.CENTER);
 		contatore.setBounds(149, 160, 187, 34);
 		contentPane.add(contatore);
+		
+		domanda = new JTextArea();
+		domanda.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		domanda.setLineWrap(true);
+		domanda.setEditable(false);
+		domanda.setBounds(30, 75, 434, 67);
+		contentPane.add(domanda);
 	}
 
-	public JTextField getDomanda() {
+	public JTextArea getDomanda() {
 		return domanda;
 	}
 
-	public void setDomanda(JTextField domanda) {
+	public void setDomanda(JTextArea domanda) {
 		this.domanda = domanda;
 	}
 

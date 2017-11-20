@@ -54,9 +54,8 @@ public class Control implements ActionListener{
 			c=new Client(luogo);
 			ind.setVisible(false);
 			i.setVisible(true);
-			ImageIcon temp=new ImageIcon(Client.class.getResource("/media/output_trgVnE.gif"));
-			suonoIntro();	        
-			i.getGifIntro().setIcon(temp);
+			sceltaImmagine(0);
+			suonoIntro();
 		}
 		else if(evt.getSource()==i.getBtnPlay()){
 			clip1.stop();
@@ -170,27 +169,24 @@ public class Control implements ActionListener{
 		v.getEsatte().setText("Numero risposte indovinate: "+stringa);
 		
 		
-		ImageIcon img;
 		if(ris.equals("vinto")){
 			v.getRisultato().setText("HAI VINTOO!!");
 			v.getCongrat().setText("Congratulazioniii!!");
 			media("/media/APPLAU22.WAV");
-			img=new ImageIcon(Client.class.getResource("/media/minions_applauso.gif"));
+			sceltaImmagine(1);
 		}
 		else if(ris.equals("pareggio")){
 			v.getRisultato().setText("PAREGGIO!");
 			v.getCongrat().setText("Ritenta,sarai più fortunato");
 			media("/media/I-QUIT2.wav");
-			img=new ImageIcon(Client.class.getResource("/media/contrariato.gif"));
+			sceltaImmagine(2);
 		}
 		else{
 			v.getRisultato().setText("HAI PERSO!");
 			v.getCongrat().setText("Ritenta,sarai più fortunato");
 			media("/media/I-QUIT2.wav");
-			img=new ImageIcon(Client.class.getResource("/media/allegri_rabbia.gif"));
+			sceltaImmagine(3);
 		}
-		
-        v.getGifVittoria().setIcon(img);
 
 		f.setVisible(false);
 		v.setVisible(true);
@@ -218,6 +214,33 @@ public class Control implements ActionListener{
 		this.risposta(0,true);
 	}
 	
+	public void sceltaImmagine(int num) {
+		int rand;
+		ImageIcon img;
+		
+		switch(num) {
+			case 0:
+				rand = (int) (Math.random() * 4)+1;
+				img=new ImageIcon(Client.class.getResource("/media/intro"+rand+".gif"));	        
+				i.getGifIntro().setIcon(img);
+				break;
+			case 1:
+				rand = (int) (Math.random() * 4)+1;
+				img=new ImageIcon(Client.class.getResource("/media/vittoria"+rand+".gif"));
+				v.getGifVittoria().setIcon(img);
+				break;
+			case 2:
+				rand = (int) (Math.random() * 4)+1;
+				img=new ImageIcon(Client.class.getResource("/media/pareggio"+rand+".gif"));
+				v.getGifVittoria().setIcon(img);
+				break;
+			case 3:
+				rand = (int) (Math.random() * 4)+1;
+				img=new ImageIcon(Client.class.getResource("/media/perso"+rand+".gif"));
+				v.getGifVittoria().setIcon(img);
+				break;
+		}
+	}
 	
 	public void suonoIntro() {
 		try {
