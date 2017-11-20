@@ -33,7 +33,7 @@ public class Vittoria extends JFrame {
 		risultato = new JLabel("");
 		risultato.setForeground(new Color(0, 128, 128));
 		risultato.setHorizontalAlignment(SwingConstants.CENTER);
-		risultato.setFont(new Font("Tahoma", Font.BOLD, 30));
+		risultato.setFont(new Font("Tahoma", Font.BOLD, 33));
 		risultato.setBounds(29, 24, 373, 63);
 		contentPane.add(risultato);
 		
