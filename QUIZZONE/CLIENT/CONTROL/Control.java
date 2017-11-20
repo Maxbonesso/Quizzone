@@ -214,6 +214,8 @@ public class Control implements ActionListener{
 		this.risposta(0,true);
 	}
 	
+	//immagine random
+	
 	public void sceltaImmagine(int num) {
 		int rand;
 		ImageIcon img;
@@ -242,6 +244,8 @@ public class Control implements ActionListener{
 		}
 	}
 	
+	
+	//suono
 	public void suonoIntro() {
 		try {
 			AudioInputStream audioIn1;
