@@ -1,29 +1,32 @@
 package VIEW;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+
 import javax.swing.SwingConstants;
 import java.awt.Color;
 import javax.swing.JTextField;
-import javax.swing.JRadioButton;
 import javax.swing.JButton;
 
-public class Frame extends JFrame {
+public class Frame extends JFrame implements WindowListener{
 
 	private JPanel contentPane;
 	private JTextField domanda;
 	private JLabel lblNewLabel, contatore;
 	private JButton risp1, risp2, risp3, risp4;
+	private boolean chiudi=false;
 
 	public Frame() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.addWindowListener(this);
 		setBounds(100, 100, 530, 440);
 		contentPane = new JPanel();
 		contentPane.setForeground(new Color(0, 128, 128));
@@ -119,5 +122,62 @@ public class Frame extends JFrame {
 
 	public void setRisp4(JButton risp4) {
 		this.risp4 = risp4;
+	}
+
+	@Override
+	public void windowActivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosed(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosing(WindowEvent e) {
+		// TODO Auto-generated method stub
+		int i = JOptionPane.showConfirmDialog(null, "Vuoi davvero uscire dal programma?", "USCITA", JOptionPane.YES_NO_OPTION);
+		
+		if(i == JOptionPane.YES_OPTION)
+		{
+			chiudi=true;
+			this.setVisible(false);
+			this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		}
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowIconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowOpened(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public boolean isChiudi() {
+		return chiudi;
+	}
+
+	public void setChiudi(boolean chiudi) {
+		this.chiudi = chiudi;
 	}
 }

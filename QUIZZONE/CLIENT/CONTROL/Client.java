@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.InetAddress;
 import java.net.Socket;
 
 public class Client {
@@ -34,7 +33,6 @@ public class Client {
 			BufferedReader in = new BufferedReader(isr);
 			String t = new String (in.readLine());
 			if(t.equals("$Iniziamo!$")){
-				System.out.println("inizia");
 				flag=true;
 			}
 		}
@@ -48,7 +46,6 @@ public class Client {
 			BufferedReader in = new BufferedReader(isr);
 			t = new String (in.readLine());
 			if(t.indexOf("$")==0){
-				System.out.println("messaggio arrivato");
 				flag=true;
 			}
 		}

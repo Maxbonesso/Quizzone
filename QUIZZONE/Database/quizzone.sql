@@ -26,12 +26,12 @@ INSERT INTO quiz (id, domanda, risposta, risposta_1, risposta_2, risposta_3) VAL
 (9, 'Il titolo di Campione di Italia venne assegnato per la prima volta nel 1898. Quale squadra lo ricevette?', 'Genoa', 'Torino', 'SPAL', 'Inter'),
 (10, 'Con la maglia del Brasile Pele ha disputato in totale...', '92 partite', '112 partite', '161 partite', '95 partite'),
 (11, 'La Valle dei Re si trova...', 'in Egitto', 'in Florida', 'in Tunisia', 'in Iran'),
-(12, 'Chi dipinse Â«La ultima cena?Â»', 'Leonardo Da Vinci.', 'Leonardo Sciascia.', 'Il Giorgione.', 'Il Caravaggio.'),
-(13, 'Chi scrisse la canzone Â«GeneraleÂ»', 'Francesco De Gregori.', 'Francesco Guccini', 'Rino Gaetano.', 'Franco Battiato.'),
+(12, 'Chi dipinse <L\' ultima cena?>', 'Leonardo Da Vinci.', 'Leonardo Sciascia.', 'Il Giorgione.', 'Il Caravaggio.'),
+(13, 'Chi scrisse la canzone <Generale>', 'Francesco De Gregori.', 'Francesco Guccini', 'Rino Gaetano.', 'Franco Battiato.'),
 (14, 'Paul Verlanie era un...', 'un poeta francese.', 'uno scrittore e medico francese.', 'uno poeta spagnolo.', 'un filosofo belga.'),
 (15, 'Quali animali trainano la slitta di Babbo Natale?', 'Delle renne.', 'Dei buoi.', 'Dei cani da slitta.', 'Dei muli.'),
 (16, 'Chi è stato elimanato dalla svezia agli spareggi per il mondiale 2018?', 'Italia', 'Spagna', 'Brasile', 'Ventura'),
 (17, 'Se vedo la fontana di Trevi, mi trovo a...', 'Roma', 'Pescara', 'Milano', 'Monaco'),
 (18, 'La branca della medicina che studia la pelle si chiama...', 'dermatologia.', 'chirurgia.', 'ematologia.', 'nefrologia.'),
-(19, 'Chi inventò la corrente elettrica alternata?', 'Nikola Tesla.', 'Levi Strauss.', 'Thomas Alva Edison.', 'Antonio Meucci.'),
-(20, 'Il Testimone nello sport è...', 'la bacchetta che viene passata tra gli atleti della stessa squadra.', 'un sinonimo di arbitro.', 'il codice di comportamento da tenere tra atleti.', 'lâ€™insieme delle regole sportive.');
+(19, 'Chi ha inventato la corrente elettrica alternata?', 'Nikola Tesla.', 'Levi Strauss.', 'Thomas Alva Edison.', 'Antonio Meucci.'),
+(20, 'Il Testimone nello sport è...', 'la bacchetta che viene passata tra gli atleti della stessa squadra.', 'un sinonimo di arbitro.', 'il codice di comportamento da tenere tra atleti.', 'l\'insieme delle regole sportive.');

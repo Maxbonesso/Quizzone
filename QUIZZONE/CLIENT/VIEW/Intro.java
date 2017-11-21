@@ -1,18 +1,19 @@
 package VIEW;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import java.awt.Font;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.awt.Color;
 import javax.swing.JButton;
 
-public class Intro extends JFrame {
+public class Intro extends JFrame implements WindowListener{
 
 	private JPanel contentPane;
 	private JLabel lblQ;
@@ -60,6 +61,53 @@ public class Intro extends JFrame {
 
 	public void setGifIntro(JLabel gifIntro) {
 		this.gifIntro = gifIntro;
+	}
+
+	@Override
+	public void windowActivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosed(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosing(WindowEvent e) {
+		// TODO Auto-generated method stub
+		int i = JOptionPane.showConfirmDialog(null, "Vuoi davvero uscire dal programma?", "USCITA", JOptionPane.YES_NO_OPTION);
+		
+		if(i == JOptionPane.YES_OPTION)
+			System.exit(0);
+		else
+			this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowIconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowOpened(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

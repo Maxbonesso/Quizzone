@@ -12,6 +12,7 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
 import VIEW.Frame;
 import VIEW.Indirizzo;
@@ -58,6 +59,7 @@ public class Control implements ActionListener{
 			suonoIntro();
 		}
 		else if(evt.getSource()==i.getBtnPlay()){
+			JOptionPane.showMessageDialog(null, "Attendi che si connetta un altro client per giocare","ATTESA",1);
 			clip1.stop();
 			i.getBtnPlay().setEnabled(false);
 			
@@ -109,8 +111,12 @@ public class Control implements ActionListener{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		if(num == -1){
+			c.close();
+			System.exit(0);
+		}
+		
 		if(cont<10) {
-			System.out.println("domanda"+cont);
 			this.domanda();
 			cont++;
 		}else {
@@ -122,8 +128,6 @@ public class Control implements ActionListener{
 	
 	public void domanda(){
 		
-		conta=new Contatore(f, this);
-		conta.start();
 		
 		String text="";
 		try {
@@ -131,6 +135,10 @@ public class Control implements ActionListener{
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		
+		if(f.isChiudi()){
+			risposta(-1,false);
 		}
 		
 		ArrayList<JButton> risposte=new ArrayList<JButton>();
@@ -141,22 +149,30 @@ public class Control implements ActionListener{
 		
 		int n1,n = text.indexOf("$", 1);
 		String stringa = text.substring(1, n);
-		f.getDomanda().setText(stringa);
-		
-		for(int i=0; i<risposte.size();i++){
-			n1 = text.indexOf("$", n+1);
-			stringa = text.substring(n+1, n1);
-			risposte.get(i).setText(stringa);
-			n = n1;
+		if(stringa.equals("vinto")){
+			cont=10;
+			risultato(text);
+		}
+		else{
+
+			conta=new Contatore(f, this);
+			conta.start();
+			
+			f.getDomanda().setText(stringa);
+			
+			for(int i=0; i<risposte.size();i++){
+				n1 = text.indexOf("$", n+1);
+				stringa = text.substring(n+1, n1);
+				risposte.get(i).setText(stringa);
+				n = n1;
+			}
 		}
 	}
 	
-	public void risultato() {
+	private void risultato() {
 		String text="";
 		try {
-			System.out.println("vittoria");
 			text = c.getText();
-			System.out.println("after");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -172,6 +188,43 @@ public class Control implements ActionListener{
 		if(ris.equals("vinto")){
 			v.getRisultato().setText("HAI VINTOO!!");
 			v.getCongrat().setText("Congratulazioniii!!");
+			media("/media/APPLAU22.WAV");
+			sceltaImmagine(1);
+		}
+		else if(ris.equals("pareggio")){
+			v.getRisultato().setText("PAREGGIO!");
+			v.getCongrat().setText("Ritenta,sarai più fortunato");
+			media("/media/I-QUIT2.wav");
+			sceltaImmagine(2);
+		}
+		else{
+			v.getRisultato().setText("HAI PERSO!");
+			v.getCongrat().setText("Ritenta,sarai più fortunato");
+			media("/media/I-QUIT2.wav");
+			sceltaImmagine(3);
+		}
+
+		f.setVisible(false);
+		v.setVisible(true);
+	}
+	
+	private void risultato(String s){
+		int n1,n = s.indexOf("$", 1);
+		String stringa, ris = s.substring(1, n);
+		n1 = s.indexOf("$", n+1);
+		stringa = s.substring(n+1, n1);
+		v.getEsatte().setText("Numero risposte indovinate: "+stringa);
+		
+		
+		if(ris.equals("vinto")){
+			
+			v.getRisultato().setText("HAI VINTOOO!!");
+			if(cont==9){
+				v.getCongrat().setText("Congratulazioniii!!");
+			}
+			else{
+				v.getCongrat().setText("L'avversario si è ritirato");
+			}
 			media("/media/APPLAU22.WAV");
 			sceltaImmagine(1);
 		}
@@ -211,8 +264,12 @@ public class Control implements ActionListener{
 	}
 	
 	public void scadutoTimer(){
-		System.out.println("scaduto");
-		this.risposta(0,true);
+		if(f.isChiudi()){
+			risposta(-1,true);
+		}
+		else{
+			this.risposta(0,true);
+		}
 	}
 	
 	//immagine random

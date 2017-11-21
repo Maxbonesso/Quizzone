@@ -1,8 +1,5 @@
 package CONTROL;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 import VIEW.Frame;
 
 public class Contatore extends Thread{

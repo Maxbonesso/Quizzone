@@ -138,7 +138,7 @@ public class TConnessione extends Thread {
 	
 	private void haiVinto()
 	{	
-		if(haIndovinato(str1) && haIndovinato(str2))	//tutti e due i giocatori hanno indovinato
+		if(haIndovinato(str1, s) && haIndovinato(str2, s1))	//tutti e due i giocatori hanno indovinato
 		{
 			if(tempo(str1) > tempo(str2))			//calcola chi ha risposto nel tempo minore
 			{
@@ -154,18 +154,18 @@ public class TConnessione extends Thread {
 				comVittoria(1);
 			}
 		}
-		else if (haIndovinato(str1))		//uno solo ha indovinato
+		else if (haIndovinato(str1, s))		//uno solo ha indovinato
 		{
 			comVittoria(0);
 		}
-		else if (haIndovinato(str2))		//uno solo ha indovinato
+		else if (haIndovinato(str2, s1))		//uno solo ha indovinato
 		{
 			comVittoria(1);
 		}
 		
 	}
 	
-	private boolean haIndovinato(String s)			//capisce se il client ha indovinato la risposta
+	private boolean haIndovinato(String s, Socket socket)			//capisce se il client ha indovinato la risposta
 	{
 		boolean ret = false;
 		
@@ -173,7 +173,9 @@ public class TConnessione extends Thread {
 		
 		if(Integer.parseInt(s.substring(1, n)) == d.getRispG())
 			ret = true;
-		
+		else if(Integer.parseInt(s.substring(1, n))==-1){
+			clientMorto(socket);
+		}
 		return ret;
 	}
 	
@@ -193,5 +195,23 @@ public class TConnessione extends Thread {
 		vittorie.set(n, vittorie.get(n) + 1);
 			
 		return ret;
+	}
+	
+	private void clientMorto(Socket socket){
+		
+			try {
+				if(socket==s1){
+					out = new PrintWriter(s.getOutputStream(), true);
+					out.println("$vinto$" + vittorie.get(0) + "$");
+				}
+				else if(socket==s){
+					out = new PrintWriter(s1.getOutputStream(), true);
+					out.println("$vinto$" + vittorie.get(1) + "$");
+				}
+				this.stop();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	}
 }

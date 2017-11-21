@@ -1,18 +1,20 @@
 package VIEW;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+
 import javax.swing.SwingConstants;
 import java.awt.Color;
 import javax.swing.JButton;
 
-public class Vittoria extends JFrame {
+public class Vittoria extends JFrame implements WindowListener{
 
 	private JPanel contentPane;
 	private JLabel risultato;
@@ -98,5 +100,53 @@ public class Vittoria extends JFrame {
 
 	public void setCongrat(JLabel congrat) {
 		this.congrat = congrat;
+	}
+
+	@Override
+	public void windowActivated(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosed(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosing(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		int i = JOptionPane.showConfirmDialog(null, "Vuoi davvero uscire dal programma?", "USCITA", JOptionPane.YES_NO_OPTION);
+		
+		if(i == JOptionPane.YES_OPTION)
+			System.exit(0);
+		else
+			this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowIconified(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowOpened(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 }
