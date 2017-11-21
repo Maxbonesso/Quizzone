@@ -137,7 +137,7 @@ public class Control implements ActionListener{
 			e.printStackTrace();
 		}
 		
-		if(f.isChiudi()){
+		if(f.getChiudi()){
 			risposta(-1,false);
 		}
 		
@@ -264,7 +264,7 @@ public class Control implements ActionListener{
 	}
 	
 	public void scadutoTimer(){
-		if(f.isChiudi()){
+		if(f.getChiudi()){
 			risposta(-1,true);
 		}
 		else{

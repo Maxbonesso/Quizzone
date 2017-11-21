@@ -173,7 +173,7 @@ public class Frame extends JFrame implements WindowListener{
 		
 	}
 
-	public boolean isChiudi() {
+	public boolean getChiudi() {
 		return chiudi;
 	}
 

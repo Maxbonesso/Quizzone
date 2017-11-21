@@ -15,7 +15,7 @@ public class Contatore extends Thread{
 	public void run() {
 		
 		long T0 = System.currentTimeMillis();
-		while(System.currentTimeMillis() - T0 < 20001){
+		while(System.currentTimeMillis() - T0 < 20001 && !f.getChiudi()){
 			int secondsLeft = (int)(System.currentTimeMillis() - T0) / 1000;
 			f.getContatore().setText(""+(20-secondsLeft));
 		}
