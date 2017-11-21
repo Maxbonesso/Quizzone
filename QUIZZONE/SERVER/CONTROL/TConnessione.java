@@ -200,13 +200,21 @@ public class TConnessione extends Thread {
 	private void clientMorto(Socket socket){
 		
 			try {
-				if(socket==s1){
-					out = new PrintWriter(s.getOutputStream(), true);
-					out.println("$vinto$" + vittorie.get(0) + "$");
+				if(socket==s1)
+				{
+					if(!s.isClosed())
+					{
+						out = new PrintWriter(s.getOutputStream(), true);
+						out.println("$vinto$" + vittorie.get(0) + "$");
+					}
 				}
-				else if(socket==s){
-					out = new PrintWriter(s1.getOutputStream(), true);
-					out.println("$vinto$" + vittorie.get(1) + "$");
+				else if(socket==s)
+				{
+					if(!s1.isClosed())
+					{
+						out = new PrintWriter(s1.getOutputStream(), true);
+						out.println("$vinto$" + vittorie.get(1) + "$");
+					}
 				}
 				this.stop();
 			} catch (IOException e) {
